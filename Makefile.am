@@ -197,3 +197,15 @@ pkginclude_HEADERS = \
 	tfm.h
 
 libtexpdf_la_LIBADD = $(FREETYPE_LIBS) $(LIBPNG_LIBS) $(ZLIB_LIBS) $(LIBPAPER_LIBS)
+
+pkgconfigdir = $(libdir)/pkgconfig
+nodist_pkgconfig_DATA = libtexpdf.pc
+
+libtexpdf.pc: $(srcdir)/libtexpdf.pc.in
+	sed -e 's![@]prefix[@]!$(prefix)!g' \
+	    -e 's![@]exec_prefix[@]!$(exec_prefix)!g' \
+	    -e 's![@]includedir[@]!$(includedir)!g' \
+	    -e 's![@]libdir[@]!$(libdir)!g' \
+	    -e 's![@]PACKAGE_VERSION[@]!$(PACKAGE_VERSION)!g' \
+	    $(srcdir)/libtexpdf.pc.in > $@
+
